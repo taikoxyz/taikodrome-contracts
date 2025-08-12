@@ -792,7 +792,7 @@ contract PoolTest is BaseTest {
         // base setup, and so they need to be deployed for these tests
         deployPoolCoins();
 
-        assertEq(pool.name(), "Stable AMM - USDC/FRAX");
+        assertEq(pool.name(), "Stable AMM - FRAX/USDC");
         pool.setName("Some new name");
         assertEq(pool.name(), "Some new name");
     }
@@ -808,7 +808,7 @@ contract PoolTest is BaseTest {
     function testSetPoolSymbol() external {
         deployPoolCoins();
 
-        assertEq(pool.symbol(), "sAMM-USDC/FRAX");
+        assertEq(pool.symbol(), "sAMM-FRAX/USDC");
         pool.setSymbol("Some new symbol");
         assertEq(pool.symbol(), "Some new symbol");
     }
