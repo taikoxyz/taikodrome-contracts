@@ -294,22 +294,18 @@ contract VeArtProxy is IVeArtProxy {
 
     /// @inheritdoc IVeArtProxy
    function corners(Config memory cfg, int256 l) public pure returns (Point[100] memory Line) {
-        int256 baseX;
-        int256 baseY;
-        int256 k;
-        {
-            int256 degrees1 = 360 * cfg.seed1 / 1000;
-            int256 degrees2 = 360 * (cfg.seed1 + 500) / 1000;
-            baseX = 2000 + ((l % 2) * 1200 * Trig.dcos(degrees1) / 1e6) + (((l + 1) % 2) * (1200 * Trig.dcos(degrees2)) / 1e6);
-            baseY = 2000 + ((l % 2) * 1200 * Trig.dsin(degrees1) / 1e6) + (((l + 1) % 2) * (1200 * Trig.dsin(degrees2)) / 1e6);
-            k = 100 + (1 + l) * 4000 / cfg.maxLines / 4;
-        }
+        int256 degrees1 = 360 * cfg.seed1 / 1000;
+        int256 degrees2 = 360 * (cfg.seed1 + 500) / 1000;
+        int256 baseX = 2000 + ((l % 2) * 1200 * Trig.dcos(degrees1) / 1e6) + (((l + 1) % 2) * (1200 * Trig.dcos(degrees2)) / 1e6);
+        int256 baseY = 2000 + ((l % 2) * 1200 * Trig.dsin(degrees1) / 1e6) + (((l + 1) % 2) * (1200 * Trig.dsin(degrees2)) / 1e6);
+        int256 k = 100 + (1 + l) * 4000 / cfg.maxLines / 4;
 
         for (int256 p = 0; p < 100; p++) {
             int256 angle3 = 360 * l / cfg.maxLines + (360 * p / 99);
+            int256 modVal = (l % 2) * 2 - 1;
             Line[uint256(p)] = Point({
-                x: baseX +                     k * Trig.dcos(angle3) / 1e6,
-                y: baseY + ((l % 2) * 2 - 1) * k * Trig.dsin(angle3) / 1e6
+                x: baseX + k * Trig.dcos(angle3) / 1e6,
+                y: baseY + modVal * k * Trig.dsin(angle3) / 1e6
             });
         }
     }
