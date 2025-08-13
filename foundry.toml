@@ -1,10 +1,13 @@
 [profile.default]
 src = 'contracts'
 out = 'out'
+optimizer = true
+optimizer_runs = 200
 
 fs_permissions = [{ access = "read-write", path = "./"}]
 
 [rpc_endpoints]
+local = "${RPC_URL}"
 base = "${BASE_RPC_URL}"
 base_goerli = "${BASE_GOERLI_RPC_URL}"
 tenderly = "${TENDERLY_RPC_URL}"
